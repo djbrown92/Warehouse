@@ -31,12 +31,14 @@ namespace Warehouse.Api
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInventory([FromRoute] int id)
         {
+
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var inventory = await _context.Inventory.FindAsync(id);
+            var inventory =  _context.GetInventory();
 
             if (inventory == null)
             {
