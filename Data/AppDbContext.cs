@@ -17,17 +17,18 @@ namespace Warehouse.Models
 
         public DbSet<Warehouse.Models.Inventory> Inventory { get; set; }
 
-        public Warehouse.Models.Inventory GetInventory() {
+        public List<Inventory> GetInventory() {
 
             string queryString = "Select * from vision.pub.pv_inventory where pv_inventory.compnum = 413";
-            // string connectionString = "DRIVER={Progress OpenEdge 11.7 Driver};HOST=ukdrdev2;PORT=15192;DB=Vision;UID=sysprogress;PWD=sysprogress;DIL=0;AS=50;";
-            string connectionString = "DRIVER={DataDirect 7.1 OpenEdge Wire Protocol};HOST=ukdrdev2;PORT=15192;DB=vision;UID=sysprogress;PWD=sysprogress;DIL=0;AS=50;";
-           // DRIVER ={ DataDirect 7.1 DB2 Wire Protocol}; IpAddress = 123.456.78.90;            PORT = 5179; DB = DB2DATA; UID = JOHN; PWD = XYZZY
+ 
+            string connectionString = "DRIVER={Progress OpenEdge 11.7 Driver};HOST=ukdrdev2;PORT=15192;DB=vision;UID=sysprogress;PWD=sysprogress;DIL=0;AS=50;";
+            // string connectionString = "DRIVER={DataDirect 7.1 OpenEdge Wire Protocol};HOST=ukdrdev2;PORT=15192;DB=vision;UID=sysprogress;PWD=sysprogress;DIL=0;AS=50;";
+            // DRIVER ={ DataDirect 7.1 DB2 Wire Protocol}; IpAddress = 123.456.78.90;            PORT = 5179; DB = DB2DATA; UID = JOHN; PWD = XYZZY
             OdbcCommand command = new OdbcCommand(queryString);
             command.CommandType = System.Data.CommandType.Text;
 
 
-            List<Inventory> inventories = new List<Inventory>();
+            List<Inventory> inventorylist = new List<Inventory>();
 
 
             // this "using" will automatically close the connection
@@ -53,7 +54,21 @@ namespace Warehouse.Models
 
                     while (reader.Read())
                     {
-                        //Inventory comp = new Company();
+                        Inventory inventory1 = new Inventory();
+
+                        inventory1.Id = reader.GetInt32(reader.GetOrdinal("TableRecId")); // get the colum number by name
+
+                        inventory1.Compnum = reader.GetInt32(reader.GetOrdinal("CompNum")); // get the colum number by name
+
+                        inventory1.Inventoryref = reader.GetString(reader.GetOrdinal("InventoryRef")); // get the colum number by name
+
+                        inventory1.Whousecode = reader.GetString(reader.GetOrdinal("Whousecode")); // get the colum number by name
+                        /*
+                        if (reader.GetDecimal(reader.GetOrdinal("Inventoryqty")) )
+                            inventory1.Inventoryqty = 0;
+                        else
+                            inventory1.Inventoryqty = reader.GetDecimal(reader.GetOrdinal("Inventoryqty")); // get the colum number by name
+                        */
 
                         //comp.id = reader.GetInt32(reader.GetOrdinal("TableRecId")); // get the colum number by name
 
@@ -64,7 +79,7 @@ namespace Warehouse.Models
                         //comp.CompanyNumber = reader.GetInt32(reader.GetOrdinal("CompNum"));
                         //comp.GroupCode = reader["GroupCode"].ToString();
 
-                        //companies.Add(comp);
+                        inventorylist.Add(inventory1);
                     }
                 }
 
@@ -75,7 +90,8 @@ namespace Warehouse.Models
                 // the end of the Using block.
             }
 
-            //return companies;
+            return inventorylist;
+                
 
             //using (odbcconnection connection = new odbcconnection(connectionstring))
             //{
@@ -94,12 +110,12 @@ namespace Warehouse.Models
             //    // the connection is automatically closed at 
             //    // the end of the using block.
             //}
-            Warehouse.Models.Inventory inventory = new Warehouse.Models.Inventory();
+            //Warehouse.Models.Inventory inventory = new Warehouse.Models.Inventory();
             //inventory.compnum = 2;
             //inventory.inventoryqty = 100;
             //inventory.inventoryref = "ir0001";
             //inventory.whousecode = "wh1";
-            return inventory;
+            //return inventory;
         }
     }
 }

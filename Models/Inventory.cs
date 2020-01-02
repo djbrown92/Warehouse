@@ -11,6 +11,6 @@ namespace Warehouse.Models
         public int Compnum { get; set; }
         public string Inventoryref { get; set; }
         public string Whousecode { get; set; }
-        public float Inventoryqty { get; set; }
+        public decimal Inventoryqty { get; set; }
     }
 }
