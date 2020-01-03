@@ -60,15 +60,35 @@ namespace Warehouse.Models
 
                         inventory1.Compnum = reader.GetInt32(reader.GetOrdinal("CompNum")); // get the colum number by name
 
-                        inventory1.Inventoryref = reader.GetString(reader.GetOrdinal("InventoryRef")); // get the colum number by name
+                        try
+                        {
+                            inventory1.Inventoryref = reader.GetString(reader.GetOrdinal("InventoryRef")); // get the colum number by name
+                        }
+                        catch
+                        {
+                            inventory1.Inventoryref = "";
+                        }
 
                         inventory1.Whousecode = reader.GetString(reader.GetOrdinal("Whousecode")); // get the colum number by name
-                        /*
-                        if (reader.GetDecimal(reader.GetOrdinal("Inventoryqty")) )
+
+                        //inventory1.Inventoryqty = reader.GetDecimal(reader.GetOrdinal("Inventoryqty")); // get the colum number by name
+
+                        try
+                        {
+                            inventory1.Inventoryqty = reader.GetDecimal(reader.GetOrdinal("Inventoryqty"));
+                        } 
+                        catch
+                        {
                             inventory1.Inventoryqty = 0;
-                        else
-                            inventory1.Inventoryqty = reader.GetDecimal(reader.GetOrdinal("Inventoryqty")); // get the colum number by name
-                        */
+                        }
+
+
+
+                        //if (reader.GetDecimal(reader.GetOrdinal("Inventoryqty")) isoftype DBNull)
+                        //    inventory1.Inventoryqty = 0;
+                        //else
+                        //    inventory1.Inventoryqty = reader.GetDecimal(reader.GetOrdinal("Inventoryqty")); // get the colum number by name
+                         
 
                         //comp.id = reader.GetInt32(reader.GetOrdinal("TableRecId")); // get the colum number by name
 
