@@ -20,14 +20,28 @@ namespace Warehouse.Api
             _context = context;
         }
 
-        // GET: api/Inventories
+        // GET: api/Inventories - RETURNS ALL RECORDS
         [HttpGet]
-        public IEnumerable<Inventory> GetInventory()
+        public async Task<IActionResult> GetInventory()
         {
-            return _context.Inventory;
+
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var inventory = _context.GetInventory();
+
+            if (inventory == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(inventory);
         }
 
-        // GET: api/Inventories/5
+        // GET: api/Inventories/5  <<<<<<<=================== NEXT ACTION - work on returning a single record
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInventory([FromRoute] int id)
         {

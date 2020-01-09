@@ -72,15 +72,15 @@ namespace Warehouse.Models
                         inventory1.Whousecode = reader.GetString(reader.GetOrdinal("Whousecode")); // get the colum number by name
 
                         //inventory1.Inventoryqty = reader.GetDecimal(reader.GetOrdinal("Inventoryqty")); // get the colum number by name
-
+                        
                         try
-                        {
+                        { 
                             inventory1.Inventoryqty = reader.GetDecimal(reader.GetOrdinal("Inventoryqty"));
                         } 
                         catch
                         {
                             inventory1.Inventoryqty = 0;
-                        }
+                        } 
 
 
 
